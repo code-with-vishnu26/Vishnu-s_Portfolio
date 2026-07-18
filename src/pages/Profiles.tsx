@@ -1,0 +1,261 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { supabase } from "@/integrations/supabase/client";
+import { motion } from "framer-motion";
+import { User, Compass, Users, Heart } from "lucide-react";
+import { toast } from "sonner";
+import { PinDialog } from "@/components/PinDialog";
+
+const profiles = [
+  {
+    id: "recruiter",
+    name: "Recruiter",
+    icon: User,
+    gradient: "from-cyan-500 to-blue-500",
+  },
+  {
+    id: "adventure",
+    name: "Adventure",
+    icon: Compass,
+    gradient: "from-purple-500 to-pink-500",
+  },
+  {
+    id: "friends",
+    name: "Friends",
+    icon: Users,
+    gradient: "from-green-500 to-teal-500",
+  },
+  {
+    id: "family",
+    name: "Family",
+    icon: Heart,
+    gradient: "from-red-500 to-orange-500",
+  },
+];
+
+const Profiles = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [showPinDialog, setShowPinDialog] = useState(false);
+  const [selectedProfile, setSelectedProfile] = useState<string>("");
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const enforce = async (session: any) => {
+      if (cancelled) return;
+      if (!session) {
+        navigate("/auth");
+        return;
+      }
+      setUserEmail(session.user.email || "");
+      setLoading(false);
+    };
+
+
+    supabase.auth.getSession().then(({ data: { session } }) => enforce(session));
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) navigate("/auth");
+      else setUserEmail(session.user.email || "");
+    });
+
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
+  }, [navigate]);
+
+  const handleProfileClick = (profileId: string) => {
+    setSelectedProfile(profileId);
+    setShowPinDialog(true);
+    setFailedAttempts(0);
+  };
+
+  const handleVerifyPin = async (pin: string): Promise<boolean> => {
+    try {
+      const { data: session } = await supabase.auth.getSession();
+      const userId = session.session?.user.id;
+
+      // Verify PIN using database function
+      const { data, error } = await supabase.rpc("verify_profile_pin", {
+        profile_name_input: selectedProfile,
+        pin_input: pin,
+      });
+
+      if (error) {
+        console.error("Error verifying PIN:", error);
+        throw error;
+      }
+
+      if (data) {
+        // Correct PIN
+        sessionStorage.setItem("pin_verified", "true");
+        setShowPinDialog(false);
+        if (selectedProfile === "recruiter") {
+          navigate("/portfolio");
+        } else {
+          toast("Coming soon!", {
+            description: `The ${selectedProfile} profile is being prepared for you.`,
+          });
+        }
+        return true;
+      } else {
+        // Wrong PIN
+        const newAttemptCount = failedAttempts + 1;
+        setFailedAttempts(newAttemptCount);
+
+        // Track failed attempt
+        if (userId) {
+          const { error: insertError } = await supabase
+            .from("failed_pin_attempts")
+            .insert({
+              user_id: userId,
+              email: userEmail,
+              profile_name: selectedProfile,
+              ip_address: await getUserIp(),
+              user_agent: navigator.userAgent,
+              attempt_count: newAttemptCount,
+            });
+
+          if (insertError) {
+            console.error("Error tracking failed attempt:", insertError);
+          }
+        }
+
+        // Send admin alert after 3 failed attempts
+        if (newAttemptCount >= 3) {
+          await sendAdminAlert(newAttemptCount);
+          toast.error("Too many failed attempts. Admin has been notified.");
+        }
+
+        return false;
+      }
+    } catch (error) {
+      console.error("Error in PIN verification:", error);
+      toast.error("Failed to verify PIN");
+      return false;
+    }
+  };
+
+  const getUserIp = async (): Promise<string> => {
+    try {
+      const response = await fetch("https://api.ipify.org?format=json");
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      return "Unknown";
+    }
+  };
+
+  const sendAdminAlert = async (attemptCount: number) => {
+    try {
+      const ipAddress = await getUserIp();
+      
+      await supabase.functions.invoke("send-admin-alert", {
+        body: {
+          email: userEmail,
+          profileName: selectedProfile,
+          attemptCount,
+          ipAddress,
+          userAgent: navigator.userAgent,
+          timestamp: new Date().toISOString(),
+        },
+      });
+    } catch (error) {
+      console.error("Error sending admin alert:", error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center p-4 sm:p-6">
+      <Helmet>
+        <title>Profiles | Vishnu Jillala</title>
+        <meta name="description" content="Choose a profile to explore Vishnu Jillala's portfolio tailored for recruiters, friends, or family." />
+        <link rel="canonical" href="https://vishnujillala.lovable.app/profiles" />
+        <meta property="og:title" content="Profiles | Vishnu Jillala" />
+        <meta property="og:description" content="Choose a profile view tailored for recruiters, adventure, friends, or family." />
+        <meta property="og:url" content="https://vishnujillala.lovable.app/profiles" />
+        <meta name="twitter:title" content="Profiles | Vishnu Jillala" />
+        <meta name="twitter:description" content="Choose a profile view tailored for recruiters, adventure, friends, or family." />
+      </Helmet>
+      <div className="w-full max-w-6xl">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center text-white mb-8 sm:mb-12 md:mb-16"
+        >
+          Who's Watching?
+        </motion.h1>
+
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 max-w-5xl mx-auto px-2 sm:px-0">
+          {profiles.map((profile, index) => {
+            const Icon = profile.icon;
+            return (
+              <motion.button
+                key={profile.id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleProfileClick(profile.id)}
+                className="group relative min-h-[120px] sm:min-h-[160px] md:min-h-[180px]"
+              >
+                <div
+                  className={`w-full aspect-square rounded-xl sm:rounded-2xl bg-gradient-to-br ${profile.gradient} p-0.5 sm:p-1 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-purple-500/50`}
+                >
+                  <div className="w-full h-full bg-black/40 backdrop-blur-sm rounded-lg sm:rounded-xl flex items-center justify-center">
+                    <Icon className="w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 text-white" />
+                  </div>
+                </div>
+                <p className="text-white text-sm sm:text-lg md:text-xl font-semibold mt-2 sm:mt-4 text-center group-hover:text-purple-400 transition-colors">
+                  {profile.name}
+                </p>
+              </motion.button>
+            );
+          })}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-10 sm:mt-12 md:mt-16"
+        >
+          <button
+            onClick={async () => {
+              await supabase.auth.signOut();
+              navigate("/auth");
+            }}
+            className="text-white/60 hover:text-white transition-colors border border-white/20 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full hover:border-white/40 text-sm sm:text-base min-h-[44px]"
+          >
+            Sign Out
+          </button>
+        </motion.div>
+
+        <PinDialog
+          open={showPinDialog}
+          onOpenChange={setShowPinDialog}
+          profileName={selectedProfile}
+          onVerify={handleVerifyPin}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Profiles;

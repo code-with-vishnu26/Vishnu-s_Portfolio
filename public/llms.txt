@@ -1,0 +1,14 @@
+# Vishnu Jillala — Portfolio
+
+> Personal portfolio of Vishnu Jillala, an aspiring full stack software engineer specializing in React, TypeScript, and modern web technologies.
+
+This site showcases projects, technical skills, certifications, education, and work experience, plus contact options for recruiters and collaborators.
+
+## Pages
+
+- [Home](/): Overview, hero introduction, and quick links to projects, skills, and contact.
+- [Portfolio](/portfolio): Detailed view of projects, technical skills, certifications, and work experience.
+
+## Optional
+
+- [Sign In](/auth): Authentication entry point for protected profile views.

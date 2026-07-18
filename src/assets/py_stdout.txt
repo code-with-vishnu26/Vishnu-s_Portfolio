@@ -1,0 +1,42 @@
+Generating dark mode transparent PNG from C:/Users/jilla/.gemini/antigravity-ide/brain/f27ae651-d982-46e7-8d2f-336899d5d8c4/media__1784088438924.jpg...
+Successfully generated dark mode transparent PNG!
+Light mode source JPEG missing: C:/Users/jilla/.gemini/antigravity-ide/brain/1b087bc0-de1f-467e-8bf9-a21cdc157e7c\media__1784059439973.jpg
+Making logo transparent from public/logo.png...
+Successfully made logo and favicon transparent!
+Making coffee transparent with halo-removal from public/coffee.png...
+Successfully made coffee image transparent with halo-removal!
+Making rocket transparent from public/rocket.png...
+Detected background colors: [(238, 238, 238)]
+Successfully made rocket transparent!
+Found 30 PDF files to process.
+Attempting to convert PDFs to PNGs...
+Converted PDF media__1784285375645.pdf -> dynamic-programming-cert.png successfully!
+Converted PDF media__1784285375674.pdf -> data-structures-cert.png successfully!
+Converted PDF media__1784285747728.pdf -> data-mining-methods-cert.png successfully!
+Converted PDF media__1784285747737.pdf -> database-management-cert.png successfully!
+Converted PDF media__1784285747796.pdf -> exploratory-data-analysis-cert.png successfully!
+Converted PDF media__1784285776211.pdf -> ibm-rag-agentic-ai-cert.png successfully!
+Converted PDF media__1784285776216.pdf -> intro-java-cert.png successfully!
+Converted PDF media__1784285989976.pdf -> intro-ai-cert.png successfully!
+Converted PDF media__1784285989985.pdf -> intro-web-dev-cert.png successfully!
+Converted PDF media__1784285989994.pdf -> intro-data-analytics-cert.png successfully!
+Converted PDF media__1784285990003.pdf -> intro-oop-java-cert.png successfully!
+Converted PDF media__1784285990018.pdf -> java-class-library-cert.png successfully!
+Converted PDF media__1784286008176.pdf -> core-java-specialization-cert.png successfully!
+Converted PDF media__1784286034379.pdf -> linear-algebra-cert.png successfully!
+Converted PDF media__1784286034396.pdf -> os-fundamentals-cert.png successfully!
+Converted PDF media__1784286034403.pdf -> oop-hierarchies-java-cert.png successfully!
+Converted PDF media__1784286034412.pdf -> multivariate-calculus-cert.png successfully!
+Converted PDF media__1784286452066.pdf -> react-basics-cert.png successfully!
+Converted PDF media__1784286452083.pdf -> renewable-energy-technology-fundamentals-cert.png successfully!
+Converted PDF media__1784287887810.pdf -> agentic-ai-frameworks-cert.png successfully!
+Converted PDF media__1784287906198.pdf -> physics-102-cert.png successfully!
+Converted PDF media__1784288051530.pdf -> develop-generative-ai-cert.png successfully!
+Converted PDF media__1784288154159.pdf -> vector-databases-rag-cert.png successfully!
+Converted PDF media__1784288154184.pdf -> build-rag-applications-cert.png successfully!
+Converted PDF media__1784350670263.pdf -> agentic-ai-frameworks-cert.png successfully!
+Converted PDF media__1784350670284.pdf -> advanced-rag-cert.png successfully!
+Converted PDF media__1784350670294.pdf -> multimodal-gen-ai-cert.png successfully!
+Converted PDF media__1784350670311.pdf -> agentic-ai-langchain-langgraph-cert.png successfully!
+Converted PDF media__1784350670327.pdf -> fundamentals-building-ai-agents-cert.png successfully!
+Converted PDF media__1784351644427.pdf -> build-ai-agents-mcp-cert.png successfully!
