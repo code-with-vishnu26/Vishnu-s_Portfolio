@@ -72,6 +72,11 @@ const Profiles = () => {
   }, [navigate]);
 
   const handleProfileClick = (profileId: string) => {
+    if (profileId === "recruiter") {
+      sessionStorage.setItem("pin_verified", "true");
+      navigate("/portfolio");
+      return;
+    }
     setSelectedProfile(profileId);
     setShowPinDialog(true);
     setFailedAttempts(0);

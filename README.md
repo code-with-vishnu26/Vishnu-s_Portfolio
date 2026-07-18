@@ -1,73 +1,68 @@
-# Welcome to your Lovable project
+# Interactive Developer Portfolio | Vishnu Jillala
 
-## Project info
+A premium, interactive, and fully-featured developer portfolio showcasing software engineering, AI/ML expertise, and academic credentials.
 
-**URL**: https://lovable.dev/projects/1e3163e5-03fc-440e-af43-d1cfc2486cb8
+## 🚀 Key Features
 
-## How can I edit this code?
+* **AI Portfolio Assistant**: An integrated conversational assistant powered by LLM resources to answer questions about skills, projects, and custom fit based on pasted job descriptions.
+* **Interactive 3D Elements**: Smooth interactive 3D elements (like the AI Robot avatar) and custom particle background fields.
+* **Specialized Certifications Grid**: A customized certifications page with:
+  * Categorization (AI & Agentic Workflows, Software Engineering, Data Science & Math).
+  * Auto-hiding filter tabs (displays only tabs with active items).
+  * Dynamically rendered verify tags (including official **Coursera Verified** footers).
+  * Snappy, GPU-accelerated entrance cascade animations.
+* **Achievements Showcase**: A dedicated section displaying verified professional milestones (such as DIGITECH Hackathon Winner).
+* **Multi-Language Support**: Fully localized in English, Telugu, Hindi, Spanish, French, and German.
+* **Interactive Professional Journey**: Visual timeline detailing professional experience, research, and educational background.
+* **GitHub Activity tracker**: Seamless integration showing current coding habits and open-source contributions.
 
-There are several ways of editing your application.
+## 🛠️ Technology Stack
 
-**Use Lovable**
+* **Core**: [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Vite](https://vitejs.dev/)
+* **Animations**: [Framer Motion](https://www.framer.com/motion/)
+* **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+* **Icons**: [Lucide React](https://lucide.dev/)
+* **Database & Auth**: [Supabase](https://supabase.com/)
+* **Theme**: [next-themes](https://github.com/pacocoursey/next-themes) (fully responsive Light & Dark Mode)
+* **SEO**: [react-helmet-async](https://github.com/staylor/react-helmet-async)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1e3163e5-03fc-440e-af43-d1cfc2486cb8) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 💻 Local Development Setup
 
-**Use your preferred IDE**
+To run this project locally, ensure you have **Node.js** (v18+) and **npm** installed.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### 1. Clone the Repository
+```bash
+git clone https://github.com/code-with-vishnu26/Vishnu-s_Portfolio.git
+cd Vishnu-s_Portfolio
 ```
 
-**Edit a file directly in GitHub**
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 3. Configure Environment Variables
+Create a `.env` file in the root directory and add your Supabase credentials:
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-**Use GitHub Codespaces**
+### 4. Start the Dev Server
+```bash
+npm run dev
+```
+Open your browser and navigate to `http://localhost:5173`.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### 5. Build for Production
+```bash
+npm run build
+```
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## 🔒 License & Contributions
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/1e3163e5-03fc-440e-af43-d1cfc2486cb8) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Developed by **Vishnu Jillala**. Feel free to explore, clone, and customize this repository for your own personal portfolio.
